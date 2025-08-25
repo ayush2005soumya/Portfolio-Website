@@ -33,7 +33,7 @@ export const ExperienceSection = () => {
       description:
         "Completed a 6-week internship on Artificial Intelligence & Machine Learning. Developed an Employee Salary Prediction Web App powered by a custom ML model. Built and deployed a Flask-based REST API for serving predictions.",
       skills: ["ML", "React", "PostgreSQL"],
-      logo: "./src/assets/edunetlogo.png", 
+      logo: "/assets/edunetlogo.png", 
     },
     {
       id: 3,
@@ -43,7 +43,7 @@ export const ExperienceSection = () => {
       description:
         "Designed and trained deep learning models to predict Hemoglobin levels from palm videos. Worked on preprocessing, evaluation, and visualization using Python and PyTorch. Maintained GitHub repo for tracking results and code.",
       skills: ["Python", "TensorFlow", "PyTorch"],
-      logo: "./src/assets/nitdgplogo.png",
+      logo: "/assets/nitdgplogo.png",
     },
   ];
 
