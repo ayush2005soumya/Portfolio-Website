@@ -11,7 +11,7 @@ export const EducationSection = () => {
       area_of_study:
         "Algorithm Design and Analysis, OOPs, TOC, Digital Logic and Computer Architecture, OS, DBMS, Computer Networks, Compiler Design etc.",
       cg: "9.30 (Till 4th Semester)",
-      logo: "./src/assets/7Gxpwk01.svg",
+      logo: "/assets/7Gxpwk01.svg",
     },
     {
       title: "Higher Secondary Education",
@@ -21,7 +21,7 @@ export const EducationSection = () => {
       description: "Specialized in Science with PCMB subject combination",
       area_of_study: "Physics, Chemistry, Mathematics, Biology",
       cg: "93% (465 out of 500)",
-      logo: "./src/assets/bTWBcQ01.svg",
+      logo: "/assets/bTWBcQ01.svg",
     },
     {
       title: "Secondary Education",
@@ -33,7 +33,7 @@ export const EducationSection = () => {
       area_of_study:
         "Mathematics, Physical and Life Sciences, Languages(1st:Bengali, 2nd: English), Geography,History",
       cg: "94.85% (664 out of 700)",
-      logo: "./src/assets/bTWBcQ01.svg",
+      logo: "/assets/bTWBcQ01.svg",
     },
   ];
 
