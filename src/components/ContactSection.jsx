@@ -1,59 +1,9 @@
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 import { FaWhatsapp, FaLinkedin, FaTelegram } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
 import toast, { Toaster } from "react-hot-toast";
 
 export const ContactSection = () => {
-  const formRef = useRef(null);
-  const [loading, setLoading] = useState(false);
-
-  const validateEmail = (email) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  const sendEmail = (e) => {
-    e.preventDefault();
-    if (!formRef.current) return;
-
-    const formData = new FormData(formRef.current);
-    const name = formData.get("user_name");
-    const email = formData.get("user_email");
-    const message = formData.get("message");
-
-    // validation
-    if (!name || !email || !message) {
-      toast.error("⚠️ Please fill out all fields");
-      return;
-    }
-    if (!validateEmail(email)) {
-      toast.error("📧 Please enter a valid email");
-      return;
-    }
-
-    setLoading(true);
-
-    emailjs
-      .sendForm(
-        "service_ttfe03o", // replace with EmailJS service id
-        "template_i8u261l", // replace with EmailJS template id
-        formRef.current,
-        "sn_XnqdUYDJWinMAZ" // replace with EmailJS public key
-      )
-      .then(
-        () => {
-          setLoading(false);
-          toast.success("Message sent successfully!");
-          formRef.current.reset();
-        },
-        (error) => {
-          setLoading(false);
-          console.error(error);
-          toast.error("Failed to send message. Try again.");
-        }
-      );
-  };
-
   return (
     <section id="contact" className=" container py-24 px-4 relative bg-secondary/30">
       {/* Toast container */}
@@ -110,20 +60,6 @@ export const ContactSection = () => {
               </div>
               <div className="flex items-start space-x-4">
                 <div className="p-3 rounded-full bg-primary/10">
-                  <Phone className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="font-medium">Phone</h4>
-                  <a
-                    href="tel:+917439645740"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    +91 7439645740
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <div className="p-3 rounded-full bg-primary/10">
                   <MapPin className="h-6 w-6 text-primary" />
                 </div>
                 <div>
@@ -134,97 +70,45 @@ export const ContactSection = () => {
                 </div>
               </div>
             </div>
-
-            <div className="pt-8 text-center">
-              <h4 className="font-bold text-2xl mb-6 text-primary">
-                Connect With Me
-              </h4>
-              <div className="flex space-x-6 justify-center">
-                <motion.a
-                  whileHover={{ scale: 1.2, rotate: 5 }}
-                  href="https://www.linkedin.com/in/ayush-chatterjee-9a4045299/"
-                  target="_blank"
-                >
-                  <FaLinkedin className="text-3xl text-foreground hover:text-primary transition-colors" />
-                </motion.a>
-                <motion.a
-                  whileHover={{ scale: 1.2, rotate: -5 }}
-                  href="https://wa.me/917439645740"
-                  target="_blank"
-                >
-                  <FaWhatsapp className="text-3xl text-foreground hover:text-primary transition-colors" />
-                </motion.a>
-                <motion.a
-                  whileHover={{ scale: 1.2 }}
-                  href="https://t.me/nemoAyush"
-                  target="_blank"
-                >
-                  <FaTelegram className="text-3xl text-foreground hover:text-primary transition-colors" />
-                </motion.a>
-              </div>
-            </div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Connect With Me (moved to the right side) */}
           <motion.div
             initial={{ x: 50, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="bg-card p-8 rounded-lg shadow-xs"
+            className="bg-card p-8 rounded-lg shadow-xs flex flex-col justify-center"
           >
-            <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
-            <form ref={formRef} onSubmit={sendEmail} className="space-y-4">
-              {["user_name", "user_email", "message"].map((field, i) => (
-                <motion.div
-                  key={i}
-                  whileFocus={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  {field === "message" ? (
-                    <textarea
-                      name="message"
-                      placeholder="Your Message"
-                      rows={5}
-                      required
-                      className="w-full px-4 py-2 rounded-lg border border-input bg-background text-foreground focus:ring-2 focus:ring-primary outline-none"
-                    />
-                  ) : (
-                    <input
-                      type={field === "user_email" ? "email" : "text"}
-                      name={field}
-                      placeholder={
-                        field === "user_name"
-                          ? "Your Name"
-                          : "Your Email"
-                      }
-                      required
-                      className="w-full px-4 py-2 rounded-lg border border-input bg-background text-foreground focus:ring-2 focus:ring-primary outline-none"
-                    />
-                  )}
-                </motion.div>
-              ))}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="cosmic-button px-6 py-2 w-full flex items-center justify-center"
+            <h4 className="font-bold text-2xl mb-6 text-primary text-center">
+              Connect With Me
+            </h4>
+            <div className="flex space-x-6 justify-center">
+              <motion.a
+                whileHover={{ scale: 1.2, rotate: 5 }}
+                href="https://www.linkedin.com/in/ayush-chatterjee-9a4045299/"
+                target="_blank"
               >
-                {loading ? (
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                    className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
-                  />
-                ) : (
-                  "Send Message"
-                )}
-              </button>
-            </form>
+                <FaLinkedin className="text-3xl text-foreground hover:text-primary transition-colors" />
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.2, rotate: -5 }}
+                href="https://wa.me/917439645740"
+                target="_blank"
+              >
+                <FaWhatsapp className="text-3xl text-foreground hover:text-primary transition-colors" />
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.2 }}
+                href="https://t.me/nemoAyush"
+                target="_blank"
+              >
+                <FaTelegram className="text-3xl text-foreground hover:text-primary transition-colors" />
+              </motion.a>
+            </div>
           </motion.div>
         </div>
       </div>
     </section>
   );
 };
-
