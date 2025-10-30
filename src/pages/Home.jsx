@@ -42,7 +42,7 @@ export const Home = () => {
         ) : (
           // otherwise show the selected "hero" area (dynamic) + common ContactSection
           <>
-            <SelectedSection />
+            <SelectedSection onNavigate={(view) => setCurrentView(view)} />
             <ContactSection />
           </>
         )}
