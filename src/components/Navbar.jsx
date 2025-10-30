@@ -1,65 +1,54 @@
-import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import { X, Menu} from "lucide-react";
+import { useState } from "react";
+import { ThemeToggle } from "../components/ThemeToggle";
+import { Starbackground } from "@/components/Starbackground";
+import { Navbar } from "@/components/Navbar";
+import { HeroSection } from "@/components/HeroSection";
+import { AboutSection } from "@/components/AboutSection";
+import { SkillsSection } from "@/components/SkillsSection";
+import { EducationSection } from "@/components/EducationSection";
+import { ProjectsSection } from "@/components/ProjectsSection";
+import { ContactSection } from "@/components/ContactSection";
+import { Footer } from "@/components/Footer";
+import { ExperienceSection } from "@/components/ExperienceSection";
 
-const navItems = [
-    { name: "Home", href: "#hero" },
-    { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
-    { name: "Projects", href: "#projects" },
-    { name: "Experience", href: "#experience" },
-    { name: "Education", href: "#education" },
-    { name: "Contact", href: "#contact" },
-];
+export const Home = () => {
+  // currentView keys: "home" (initial), "about", "skills", "projects", "experience", "education", "contact"
+  const [currentView, setCurrentView] = useState("home");
 
+  const sectionMap = {
+    home: HeroSection,
+    about: AboutSection,
+    skills: SkillsSection,
+    projects: ProjectsSection,
+    experience: ExperienceSection,
+    education: EducationSection,
+  };
 
-export const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const SelectedSection = sectionMap[currentView] || HeroSection;
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.screenY > 10)
-        }
-
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-
-    return (
-        <nav className={cn("fixed w-full z-40 transition-all duration-3 bg-background", isScrolled ? "py-3 bg-background/80 backdrop-blur-md shadow-xs" : "py-5")}>
-
-            <div className="container flex items-center justify-between">
-                <a className="text-xl font-bold text-primary flex items-center" href="#hero">
-                    <span className="relative z-10">
-                        <span className="text-glow text-foreground">Ayush Chatterjee</span> Portfolio
-                    </span>
-                </a>
-
-                {/*desktop version */}
-                <div className="hidden md:flex space-x-6">
-                    {navItems.map((item, key) => (
-                        <a key={key} href={item.href} className="text-foreground/80 hover:text-primary transition-colors duration-300 font-bold">
-                            {item.name}
-                        </a>
-                    ))}
-                </div>
-                {/*mobile nav*/}
-
-                <button onClick={() => setIsMenuOpen((prev) => !prev)} className="md:hidden p-2 text-foreground z-50" aria-label={isMenuOpen? "Close Menu" : "Open Menu"}> {isMenuOpen ? <X size={24} /> : <Menu size={24}/>}</button>
-                <div className={cn("fixed inset-0 bg-background/95 backdrop-blur-md z-40 flex flex-col items-center justify-center",
-                    "transition-all duration-300 md:hidden",
-                    isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-                )}>
-                    <div className="flex flex-col space-y-8 text-xl">
-                        {navItems.map((item, key) => (
-                            <a key={key} href={item.href} className="text-foreground/80 hover:text-primary transition-colors duration-300 font-bold" onClick={() => setIsMenuOpen(false)}>
-                                {item.name}
-                            </a>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </nav>
-    );
+  return (
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Theme Toggle */}
+      <ThemeToggle />
+      {/* Background Effect */}
+      <Starbackground />
+      {/* navbar - pass handler */}
+      <Navbar onNavigate={(viewKey) => setCurrentView(viewKey)} />
+      {/* Main Content */}
+      <main>
+        {currentView === "contact" ? (
+          // show ONLY ContactSection when Contact is chosen
+          <ContactSection />
+        ) : (
+          // otherwise show the selected "hero" area (dynamic) + common ContactSection
+          <>
+            <SelectedSection />
+            <ContactSection />
+          </>
+        )}
+      </main>
+      {/* Footer */}
+      <Footer />
+    </div>
+  );
 };
