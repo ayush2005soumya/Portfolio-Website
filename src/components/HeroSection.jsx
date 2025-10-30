@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-export const HeroSection = () => {
+export const HeroSection = ({ onNavigate = () => {} }) => {
   const words = [
     "Ayush Chatterjee",
     "a Full-stack Developer",
@@ -74,9 +74,19 @@ export const HeroSection = () => {
           </p>
 
           <div className="opacity-0 animate-fade-in-delay-4 pt-4">
-            <a href="#projects" className="cosmic-button">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                // navigate to projects view in parent
+                onNavigate("projects");
+                // optionally scroll to top
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="cosmic-button"
+            >
               View My Work
-            </a>
+            </button>
           </div>
         </div>
       </div>
